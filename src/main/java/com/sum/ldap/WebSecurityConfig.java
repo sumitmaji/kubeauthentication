@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").authenticated()
                 .antMatchers("/welcome").authenticated()
                 .and()
-                .formLogin();
+                .formLogin().loginPage("/ldapauthentication/login");
     }
 
     @Override
