@@ -11,4 +11,4 @@ VERSION=1.0
 CONTEXT=ldapauthentication
 APP_SRC_CODE=src
 BUILD_TYPE=SPRING
-MAIN_CLASS=com.sum.rest.webservices.restfulwebservices.RestfulWebServicesApplication
+MAIN_CLASS=com.sum.ldap.LdapApplication
