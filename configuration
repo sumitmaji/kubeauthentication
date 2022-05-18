@@ -1,0 +1,14 @@
+IMAGE_NAME=sumit/ldapauthentication
+REGISTRY=master.cloud.com:5000
+REPO_NAME=ldapauthentication
+CONTAINER_NAME=ldapauthentication
+BUILD_PATH=/tmp
+RELEASE_NAME=ldapauthentication
+PATH_TO_CHART=chart
+DEPLOY=true
+APPNAME=ldapauthentication
+VERSION=1.0
+CONTEXT=ldapauthentication
+APP_SRC_CODE=src
+BUILD_TYPE=SPRING
+MAIN_CLASS=com.sum.rest.webservices.restfulwebservices.RestfulWebServicesApplication
