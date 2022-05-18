@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .ldapAuthentication()
                 .userSearchFilter("(uid={0})")
 //                .userDnPatterns("uid={0},ou=people")
-//                .groupSearchBase("ou=groups")
+                .groupSearchBase("ou=users")
                 .contextSource(contextSource())
 //                .url("ldap://ldap.default.svc.cloud.uat/dc=springframework,dc=org")
 //                .and()
