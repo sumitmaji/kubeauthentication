@@ -20,6 +20,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/healthz").permitAll()
+                .antMatchers("/echo").permitAll()
+                .antMatchers("/302").permitAll()
                 .antMatchers("/").authenticated()
                 .antMatchers("/welcome").authenticated()
                 .and()

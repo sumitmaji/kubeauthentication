@@ -16,4 +16,20 @@ public class HomeController {
         return "OK";
     }
 
+    @GetMapping(value = "/echo")
+    public void echo(HttpServletRequest request, HttpServletResponse response) {
+        Enumeration<String> headerNames = request.getHeaderNames();
+        if (headerNames != null) {
+            while (headerNames.hasMoreElements()) {
+                String headerName = headerNames.nextElement();
+                response.setHeader(String.format("x-echo-%s", headerName.toLowerCase()), request.getHeader(headerName));
+            }
+        }
+    }
+
+    @GetMapping(value = "/302")
+    public void redirect(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/echo");
+    }
+
 }
