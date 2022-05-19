@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         LdapContextSource bean = new LdapContextSource();
         bean.setUrl("ldap://ldap.default.svc.cloud.uat");
         bean.setBase("dc=default,dc=svc,dc=cloud,dc=uat");
-        bean.setUserDn("cn=admin");
+        bean.setUserDn("cn=admin,dc=default,dc=svc,dc=cloud,dc=uat");
         bean.setPassword("sumit");
         bean.setPooled(true);
         bean.setReferral("follow");
