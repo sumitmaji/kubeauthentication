@@ -20,9 +20,9 @@ ingress:
     kubernetes.io/ingress.class: nginx
     #nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/proxy-redirect-from: "default"
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        proxy_redirect https://master.cloud.com https://master.cloud.com;
-        proxy_redirect http://master.cloud.com https://master.cloud.com;
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_redirect https://master.cloud.com https://master.cloud.com;
+      proxy_redirect http://master.cloud.com https://master.cloud.com;
   path: /
   hosts:
     - master.cloud.com
