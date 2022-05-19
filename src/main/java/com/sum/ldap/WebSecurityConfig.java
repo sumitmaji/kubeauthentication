@@ -37,9 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .userSearchBase("ou=users")
 //                .userDnPatterns("cn={0},ou=users")
 //                .groupSearchBase("ou=users")
-//                .contextSource(contextSource())
-                .contextSource()
-                .url("ldap://ldap.default.svc.cloud.uat/dc=default,dc=svc,dc=cloud,dc=uat");
+                .contextSource(contextSource());
+//                .contextSource()
+//                .url("ldap://ldap.default.svc.cloud.uat/dc=default,dc=svc,dc=cloud,dc=uat");
 //                .and()
 //                .passwordCompare()
 //                .passwordEncoder(new LdapShaPasswordEncoder())
@@ -55,7 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         bean.setUserDn("cn=admin,dc=default,dc=svc,dc=cloud,dc=uat");
         bean.setPassword("sumit");
         bean.setPooled(true);
-        bean.setReferral("follow");
+        bean.setAnonymousReadOnly(false);
+//        bean.setReferral("follow");
         bean.afterPropertiesSet();
         return bean;
     }
