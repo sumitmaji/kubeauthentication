@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .groupSearchBase("ou=users")
 //                .contextSource(contextSource())
                 .contextSource()
-                .url("ldap://ldap.default.svc.cloud.uat/ou=users,dc=default,dc=svc,dc=cloud,dc=uat");
+                .url("ldap://ldap.default.svc.cloud.uat/dc=default,dc=svc,dc=cloud,dc=uat");
 //                .and()
 //                .passwordCompare()
 //                .passwordEncoder(new LdapShaPasswordEncoder())
