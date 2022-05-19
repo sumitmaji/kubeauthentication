@@ -37,4 +37,9 @@ public class HomeController {
         response.sendRedirect("/echo");
     }
 
+    @GetMapping(value = "/")
+    public void logout(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/logout");
+    }
+
 }
