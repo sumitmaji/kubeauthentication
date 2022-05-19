@@ -38,8 +38,8 @@ public class HomeController {
     }
 
     @GetMapping(value = "/")
-    public String home(HttpServletResponse response) throws IOException {
-        return "home.html";
+    public void home(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/home.html");
     }
 
 }
