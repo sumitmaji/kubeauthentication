@@ -39,7 +39,7 @@ public class HomeController {
 
     @GetMapping(value = "/")
     public void logout(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/logout");
+        response.sendRedirect("/home.html");
     }
 
 }
