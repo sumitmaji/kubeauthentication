@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 @Configuration
@@ -32,14 +33,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .ldapAuthentication()
-                .userSearchFilter("(uid={0})")
-//                .userDnPatterns("uid={0},ou=people")
-                .groupSearchBase("ou=users")
-                .contextSource(contextSource())
-//                .url("ldap://ldap.default.svc.cloud.uat/dc=springframework,dc=org")
-//                .and()
+//                .userSearchFilter("(uid={0})")
+                .userDnPatterns("cn={0},ou=people")
+                .groupSearchBase("ou=groups")
+//                .contextSource(contextSource())
+                .contextSource()
+                .url("ldap://ldap.default.svc.cloud.uat/dc=default,dc=svc,dc=cloud,dc=uat")
+                .and()
                 .passwordCompare()
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
+                .passwordEncoder(new LdapShaPasswordEncoder())
                 .passwordAttribute("userpassword");
     }
 
