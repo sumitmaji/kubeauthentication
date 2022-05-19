@@ -38,8 +38,8 @@ public class HomeController {
     }
 
     @GetMapping(value = "/")
-    public void logout(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/home.html");
+    public String home(HttpServletResponse response) throws IOException {
+        return "home.html";
     }
 
 }
