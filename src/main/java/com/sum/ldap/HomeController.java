@@ -37,4 +37,9 @@ public class HomeController {
         response.sendRedirect("/echo");
     }
 
+    @GetMapping(value = "/")
+    public void home(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/home.html");
+    }
+
 }

@@ -26,7 +26,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").authenticated()
                 .antMatchers("/welcome").authenticated()
                 .and()
-                .formLogin();
+                .formLogin()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID");
     }
 
     @Override
