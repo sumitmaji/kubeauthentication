@@ -19,7 +19,7 @@ public class JwtController {
     @Autowired
     OAuth2AuthorizedClientService clientService;
 
-    @GetMapping("/token")
+    @GetMapping("/oauth2/token")
     public Token getAuth(@AuthenticationPrincipal OidcUser principal){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;

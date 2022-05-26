@@ -12,14 +12,15 @@ public class OAuth0WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .antMatcher("/**/oauth2/**")
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/token").authenticated()
+                .antMatchers("/oauth2/token").authenticated()
                 .and()
                 .oauth2Login()
                 .and()
                 .logout()
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/oauth2/token")
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID");
     }
 
