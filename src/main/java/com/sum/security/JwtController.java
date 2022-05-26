@@ -1,5 +1,6 @@
 package com.sum.security;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,13 +20,33 @@ public class JwtController {
     OAuth2AuthorizedClientService clientService;
 
     @GetMapping("/token")
-    public String getAuth(@AuthenticationPrincipal OidcUser principal){
+    public Token getAuth(@AuthenticationPrincipal OidcUser principal){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
         OAuth2AuthorizedClient oAuth2AuthorizedClient = clientService.
                 loadAuthorizedClient(token.getAuthorizedClientRegistrationId(), token.getName());
         OidcIdToken idToken = principal.getIdToken();
         String tokenValue = idToken.getTokenValue();
-        return tokenValue;
+
+
+        Token res = new Token(principal.getIdToken().getTokenValue(),
+                oAuth2AuthorizedClient.getAccessToken().getTokenValue(),
+                oAuth2AuthorizedClient.getRefreshToken() != null ? oAuth2AuthorizedClient.getRefreshToken().getTokenValue() : null
+        );
+
+        return res;
+    }
+
+    @Data
+    class Token{
+        private String idToken;
+        private String accessToken;
+        private String refreshToken;
+
+        public Token(String tokenValue, String tokenValue1, String tokenValue2) {
+            this.idToken = tokenValue;
+            this.accessToken = tokenValue1;
+            this.refreshToken = tokenValue2;
+        }
     }
 }
