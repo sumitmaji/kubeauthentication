@@ -13,7 +13,7 @@ public class SecurityConfig {
     private ClientRegistration clientRegistration(){
         ClientRegistration build = ClientRegistration.withRegistrationId("auth0")
                 .clientId("C3UHISO3z60iF1JLG8L7VPUSWOASrJfO")
-                .clientSecret("9BAQYRvX6qdQyFSkT06tm2jbw0TVFZu6wW4BPFaHECtLsE87e0fBv4bF8pnXYWLs")
+                .clientSecret("")
                 .scope("openid", "profile", "email")
                 .authorizationUri("https://skmaji.auth0.com/authorize")
                 .tokenUri("https://skmaji.auth0.com/oauth/token")
