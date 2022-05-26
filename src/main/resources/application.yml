@@ -1,0 +1,24 @@
+#server.ssl.key-store-password=tomcat
+#server.ssl.key-store=classpath:mykeystore.p12
+#server.ssl.key-store-type=PKCS12
+#server.ssl.key-alias=tomcat
+#server.port=8001
+#logging.level.org.springframework=DEBUG
+#server.use-forward-headers=true
+#server.servlet.context-path=/ldapauthentication
+#server.tomcat.use-relative-redirects=true
+
+server:
+  tomcat:
+    use-relative-redirects: true
+oauth:
+  clientId: C3UHISO3z60iF1JLG8L7VPUSWOASrJfO
+  clientSecret:
+  realm: Username-Password-Authentication
+  audience: https://skmaji.auth0.com/userinfo
+  authorizeUrl: https://skmaji.auth0.com/authorize
+  tokenUrl: https://skmaji.auth0.com/oauth/token
+  userInfoUrl: https://skmaji.auth0.com/userinfo
+  clientName: OAuth0
+  jwkUrl: https://skmaji.auth0.com/.well-known/jwks.json
+  registrationId: auth0
