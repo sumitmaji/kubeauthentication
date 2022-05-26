@@ -16,4 +16,4 @@ COPY --from=backend-build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=backend-build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=backend-build ${DEPENDENCY}/BOOT-INF/classes /app
 
-ENTRYPOINT ["java", "-cp", "app:app/lib/*", "-Dserver.port=8001", "com.sum.ldap.LdapApplication"]
+ENTRYPOINT ["java", "-cp", "app:app/lib/*", "-Dserver.port=8001", "com.sum.security.AuthenticationApplication"]

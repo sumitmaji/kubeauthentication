@@ -1,4 +1,4 @@
-package com.sum.ldap;
+package com.sum.security;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

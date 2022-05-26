@@ -1,4 +1,4 @@
-package com.sum.ldap;
+package com.sum.security;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

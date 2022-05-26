@@ -1,4 +1,4 @@
-package com.sum.ldap.config;
+package com.sum.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

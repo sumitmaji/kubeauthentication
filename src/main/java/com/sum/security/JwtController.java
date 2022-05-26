@@ -1,4 +1,4 @@
-package com.sum.ldap;
+package com.sum.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
