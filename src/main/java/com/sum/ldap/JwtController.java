@@ -24,7 +24,6 @@ public class JwtController {
         OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
         OAuth2AuthorizedClient oAuth2AuthorizedClient = clientService.
                 loadAuthorizedClient(token.getAuthorizedClientRegistrationId(), token.getName());
-        System.out.println("Principal" + principal);
         OidcIdToken idToken = principal.getIdToken();
         String tokenValue = idToken.getTokenValue();
         return tokenValue;
