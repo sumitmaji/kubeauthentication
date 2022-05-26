@@ -19,6 +19,7 @@ public class LdapWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/healthz").permitAll()
+                .antMatchers("/kubectl").permitAll()
                 .antMatchers("/echo").permitAll()
                 .antMatchers("/302").permitAll()
                 .antMatchers("/").authenticated()

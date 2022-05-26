@@ -11,3 +11,8 @@
 server:
   tomcat:
     use-relative-redirects: true
+oauth:
+  clientId: C3UHISO3z60iF1JLG8L7VPUSWOASrJfO
+  clientSecret:
+  realm: Username-Password-Authentication
+  audience: https://skmaji.auth0.com/userinfo
