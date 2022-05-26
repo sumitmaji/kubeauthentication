@@ -1,11 +1,13 @@
 package com.sum.security;
 
 import com.sum.security.filters.KubernetesAuthFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.ldap.core.support.LdapContextSource;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,6 +27,7 @@ public class LdapWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/echo").permitAll()
                 .antMatchers("/302").permitAll()
                 .antMatchers("/").authenticated()
+                .antMatchers("/kubeauth").permitAll()
                 .antMatchers("/welcome").authenticated()
                 .and()
                 .formLogin()
@@ -56,6 +59,12 @@ public class LdapWebSecurityConfig extends WebSecurityConfigurerAdapter {
         bean.setAnonymousReadOnly(false);
         bean.afterPropertiesSet();
         return bean;
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
 }
