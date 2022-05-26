@@ -16,3 +16,9 @@ oauth:
   clientSecret:
   realm: Username-Password-Authentication
   audience: https://skmaji.auth0.com/userinfo
+  authorizeUrl: https://skmaji.auth0.com/authorize
+  tokenUrl: https://skmaji.auth0.com/oauth/token
+  userInfoUrl: https://skmaji.auth0.com/userinfo
+  clientName: OAuth0
+  jwkUrl: https://skmaji.auth0.com/.well-known/jwks.json
+  registrationId: auth0
