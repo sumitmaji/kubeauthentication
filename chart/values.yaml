@@ -1,11 +1,11 @@
-# Default values for ldapauthentication.
+# Default values for kubeauthentication.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: master.cloud.com:5000/ldapauthentication
+  repository: master.cloud.com:5000/kubeauthentication
   tag: latest
   pullPolicy: Always
   port: 8001

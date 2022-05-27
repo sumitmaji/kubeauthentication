@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "ldapauthentication.fullname" . }}
+  name: {{ template "kubeauthentication.fullname" . }}
   labels:
-    app: {{ template "ldapauthentication.name" . }}
-    chart: {{ template "ldapauthentication.chart" . }}
+    app: {{ template "kubeauthentication.name" . }}
+    chart: {{ template "kubeauthentication.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "ldapauthentication.name" . }}
+      app: {{ template "kubeauthentication.name" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "ldapauthentication.name" . }}
+        app: {{ template "kubeauthentication.name" . }}
         release: {{ .Release.Name }}
     spec:
       containers:
