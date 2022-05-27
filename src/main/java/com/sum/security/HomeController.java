@@ -1,6 +1,8 @@
 package com.sum.security;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,11 +12,6 @@ import java.util.Enumeration;
 
 @RestController
 public class HomeController {
-
-    @GetMapping("/welcome")
-    public String index() {
-        return "Welcome to the home page!";
-    }
 
     @GetMapping("/healthz")
     public String healthz(){
@@ -32,14 +29,9 @@ public class HomeController {
         }
     }
 
-    @GetMapping(value = "/302")
-    public void redirect(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/echo");
-    }
-
-    @GetMapping(value = "/")
-    public void home(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/home.html");
+    @GetMapping(value="/authorize")
+    @ResponseStatus(value = HttpStatus.OK, reason = "OK")
+    public void authorize(){
     }
 
 }

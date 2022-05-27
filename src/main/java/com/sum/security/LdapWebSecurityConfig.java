@@ -22,13 +22,9 @@ public class LdapWebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/healthz").permitAll()
-                .antMatchers("/kubectl").permitAll()
-                .antMatchers("/echo").permitAll()
-                .antMatchers("/302").permitAll()
-                .antMatchers("/").authenticated()
-                .antMatchers("/kubeauth").permitAll()
-                .antMatchers("/welcome").authenticated()
+                .antMatchers("/kubeauth").permitAll() //authentication via webhooks
+                .antMatchers("/healthz").permitAll() //health api
+                .antMatchers("/authorize").authenticated() //authentication via ldap
                 .and()
                 .formLogin()
                 .and()

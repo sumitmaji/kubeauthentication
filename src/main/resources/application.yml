@@ -13,7 +13,7 @@ server:
     use-relative-redirects: true
 oauth:
   clientId: C3UHISO3z60iF1JLG8L7VPUSWOASrJfO
-  clientSecret: MwyXYIj-AJ1Q9THl-2hvxADhOBEoVWt36_GFSB8eLHJEWiGdKnGX6aLtXOyWkFIU
+  clientSecret:
   realm: Username-Password-Authentication
   audience: https://skmaji.auth0.com/userinfo
   authorizeUrl: https://skmaji.auth0.com/authorize
