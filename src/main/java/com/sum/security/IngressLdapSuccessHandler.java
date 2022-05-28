@@ -15,7 +15,7 @@ public class IngressLdapSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         String referer =  httpServletRequest.getHeader("Referer");
-        Pattern compile = Pattern.compile("(.*)(id=)(.*)");
+        Pattern compile = Pattern.compile("(.*)(rd=)(.*)");
         Matcher matcher = compile.matcher(referer);
         String redirectUrl = null;
         if(matcher.matches()){
