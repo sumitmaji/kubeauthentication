@@ -1,7 +1,9 @@
 package com.sum.security;
 
 import com.sum.security.filters.KubernetesAuthFilter;
+import io.netty.util.internal.NoOpTypeParameterMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.proxy.NoOp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -11,6 +13,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -26,12 +31,13 @@ public class LdapWebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .requestMatchers()
-                .antMatchers("/healthz", "/kubeauth", "/authorize", "/login")
+                .antMatchers("/healthz", "/kubeauth", "/login", "/logout")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/kubeauth").permitAll() //authentication via webhooks
                 .antMatchers("/healthz").permitAll() //health api
                 .antMatchers("/authorize").permitAll() //health api
+                .antMatchers("/authenticate").permitAll() //health api
                 .and()
                 .formLogin()
                 .and()
@@ -65,10 +71,29 @@ public class LdapWebSecurityConfig extends WebSecurityConfigurerAdapter {
         return bean;
     }
 
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
+    //Local authentication testing
+
+//    @Bean
+//    PasswordEncoder passwordEncoder(){
+//        return NoOpPasswordEncoder.getInstance();
+//    }
+//
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("sumit")
+//                .password(passwordEncoder().encode("sumit")).roles("USER");
+//    }
+//
+//    @Bean
+//    public UserDetailsService userDetailsServiceBean() throws Exception {
+//        return super.userDetailsServiceBean();
+//    }
 }
