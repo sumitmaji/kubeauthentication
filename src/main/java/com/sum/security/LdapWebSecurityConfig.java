@@ -17,20 +17,32 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Order(2)
 public class LdapWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private AuthEntryPointLdap unauthorizedHandler;
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .requestMatchers()
+                .antMatchers("/healthz", "/kubeauth", "/authorize", "/login")
+                .and()
                 .authorizeRequests()
                 .antMatchers("/kubeauth").permitAll() //authentication via webhooks
                 .antMatchers("/healthz").permitAll() //health api
-                .antMatchers("/authorize").authenticated() //authentication via ldap
                 .and()
                 .formLogin()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/login")
-                .invalidateHttpSession(true).deleteCookies("JSESSIONID");
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/authorize").authenticated() //authentication via ldap
+                .and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+        ;
 
         http.addFilterBefore(new KubernetesAuthFilter(), UsernamePasswordAuthenticationFilter.class);
     }
