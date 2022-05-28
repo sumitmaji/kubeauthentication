@@ -31,17 +31,13 @@ public class LdapWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/kubeauth").permitAll() //authentication via webhooks
                 .antMatchers("/healthz").permitAll() //health api
+                .antMatchers("/authorize").permitAll() //health api
                 .and()
                 .formLogin()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/login")
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID")
-                .and()
-                .authorizeRequests()
-                .antMatchers("/authorize").authenticated() //authentication via ldap
-                .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
         ;
 
         http.addFilterBefore(new KubernetesAuthFilter(), UsernamePasswordAuthenticationFilter.class);
