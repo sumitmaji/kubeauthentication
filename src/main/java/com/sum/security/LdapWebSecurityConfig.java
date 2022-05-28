@@ -79,7 +79,7 @@ public class LdapWebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     //Local authentication testing
-
+//
 //    @Bean
 //    PasswordEncoder passwordEncoder(){
 //        return NoOpPasswordEncoder.getInstance();

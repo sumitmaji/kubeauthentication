@@ -42,7 +42,7 @@ public class LdapController {
     }
 
     @GetMapping(value="/authorize")
-    public ResponseEntity<String> authorize(){
+    public ResponseEntity<String> authorize(Authentication authenticationTemp){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication instanceof AnonymousAuthenticationToken){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error: Unauthorized");
