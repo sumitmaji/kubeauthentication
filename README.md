@@ -41,3 +41,10 @@ was sent by the ingress controller to the login service a request parameter.
 
 3. It provides `/oauth2/token` api for authenticating user using Auth0 OpenId Connect. It provides id_token
 and access_token as response to user.
+
+# Documents and Useful Link
+- Below links provide good architecture and code examples of customizing spring security
+```markdown
+https://www.bezkoder.com/spring-boot-jwt-mysql-spring-security-architecture/
+https://www.bezkoder.com/spring-boot-jwt-authentication/
+```
