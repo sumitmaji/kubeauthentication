@@ -5,6 +5,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+/**
+ * This security configuration is applied for any api having oauth2 in the url.
+ */
 @Configuration
 @Order(1)
 public class OAuth0WebSecurityConfig extends WebSecurityConfigurerAdapter {

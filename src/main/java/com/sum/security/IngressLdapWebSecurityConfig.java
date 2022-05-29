@@ -27,11 +27,11 @@ public class IngressLdapWebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .requestMatchers()
-                .antMatchers("/authorize", "/authenticate")
+                .antMatchers("/check", "/authenticate")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authorize").permitAll() //health api
-                .antMatchers("/authenticate").permitAll() //health api
+                .antMatchers("/check").permitAll() // Check if user is authenticated
+                .antMatchers("/authenticate").permitAll() // Presents user with login page
                 .anyRequest().authenticated()
 
                 .and()

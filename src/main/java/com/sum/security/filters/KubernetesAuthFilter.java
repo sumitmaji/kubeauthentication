@@ -24,6 +24,22 @@ public class KubernetesAuthFilter extends OncePerRequestFilter {
     public KubernetesAuthFilter() {
     }
 
+    /**
+     * This filter intercepts the requests and validates if the request body contains
+     * TokenReview object or not. If the request body does not contain the TokenReview object
+     * then it does nothing forward the request to next filter. If the request body contains
+     * TokenReview object then it extracts the username and password from the token attribute
+     * of the object and attach them against username and password attribute in request object
+     * before being sent to next filter.
+     *
+     * This feature is developed for kubernetes authentication via proxy, where kubernetes would
+     * send TokenReview object to proxy url configured and expects TokenReview response.
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @param filterChain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 

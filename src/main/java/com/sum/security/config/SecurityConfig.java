@@ -8,6 +8,9 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
+/**
+ * Auth0 openid connect details
+ */
 @Configuration
 public class SecurityConfig {
 

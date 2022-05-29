@@ -38,6 +38,18 @@ public class KubeController {
     @Value(value = "${oauth.audience}")
     private String audience;
 
+    /**
+     * This api validates user credentials with Auth0 openid connect.
+     * If the authentication is successful, then it returns id_token and access_token.
+     * If the the authentication is unsuccessful, then it returns error.
+     * This api is used by the kube-login cli
+     * (https://github.com/sumitmaji/kubernetes/tree/master/install_k8s/kube-login) to validate
+     * user's credentials. On successful login, the cli use the id_token and sends the same
+     * to kubernetes for validation. Upon validation, the kubernetes allows/rejects the operation.
+     * @param username
+     * @param password
+     * @return
+     */
     @GetMapping("/kubectl")
     public String getToken(@RequestParam String username, @RequestParam String password) {
         Payload payload = new Payload(grantType, username, password, clientId,
@@ -58,9 +70,32 @@ public class KubeController {
         return retrieve;
     }
 
+    /**
+     * Ldap authentication manager, used for validating user credentials
+     * in ldap.
+     */
     @Autowired
     private AuthenticationManager authManager;
 
+
+    /**
+     * The api validates the user credentials against the ldap server
+     * and returns the TokenReview object. If the user credentials are valid
+     * then the TokenReview object is send with authenticated=true
+     * and groups=['developers', 'administrator'] attributes are set.
+     * If the user credentials are not valid then TokenReview Object is send
+     * with authenticated=false attribute are set.
+     *
+     * Before this api, the request is intercepted by KubernetesAuthFilter with sets
+     * the username and password attribute before being forwarded to this api. For more
+     * details about what this Filter does, please check the code documentation.
+     *
+     * This feature is developed for kubernetes authentication via proxy, where kubernetes would
+     * send TokenReview object to proxy api (/kubeauth) present in the configuration
+     * and expects TokenReview response.
+     * @param request
+     * @return
+     */
     @PostMapping("/kubeauth")
     public TokenReview getTokenReview(HttpServletRequest request) {
         Authentication authenticate = null;
@@ -77,7 +112,6 @@ public class KubeController {
         TokenReview tokenReview = null;
         if (authenticate == null || authenticate instanceof AnonymousAuthenticationToken) {
             tokenReview = new TokenReview(false, null);
-//            tokenReview = new TokenReview(false, "Sumit");
         } else {
             tokenReview = new TokenReview(true, authenticate.getName());
         }
@@ -106,7 +140,7 @@ public class KubeController {
                 if(userName != null){
                     User user = new User();
                     user.setUsername(userName);
-                    user.setGroups(Arrays.asList("developers", "admin"));
+                    user.setGroups(Arrays.asList("developers", "administrator"));
                     this.user = user;
                 }
             }
