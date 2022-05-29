@@ -44,7 +44,6 @@ and access_token as response to user.
 
 # Documents and Useful Link
 - Below links provide good architecture and code examples of customizing spring security
-```link
-https://www.bezkoder.com/spring-boot-jwt-mysql-spring-security-architecture
-https://www.bezkoder.com/spring-boot-jwt-authentication/
-```
+[https://www.bezkoder.com/spring-boot-jwt-mysql-spring-security-architecture](https://www.bezkoder.com/spring-boot-jwt-mysql-spring-security-architecture)
+[https://www.bezkoder.com/spring-boot-jwt-authentication/](https://www.bezkoder.com/spring-boot-jwt-authentication/)
+
