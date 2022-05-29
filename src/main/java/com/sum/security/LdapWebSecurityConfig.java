@@ -36,8 +36,6 @@ public class LdapWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/kubeauth").permitAll() //authentication via webhooks
                 .antMatchers("/healthz").permitAll() //health api
-                .antMatchers("/authorize").permitAll() //health api
-                .antMatchers("/authenticate").permitAll() //health api
                 .and()
                 .formLogin()
                 .and()

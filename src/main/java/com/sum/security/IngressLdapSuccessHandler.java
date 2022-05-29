@@ -8,10 +8,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class IngressLdapSuccessHandler implements AuthenticationSuccessHandler {
+
+    private String decode(String url) throws UnsupportedEncodingException {
+        return URLDecoder.decode(url, StandardCharsets.UTF_8.toString());
+    }
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         String referer =  httpServletRequest.getHeader("Referer");
@@ -19,7 +27,7 @@ public class IngressLdapSuccessHandler implements AuthenticationSuccessHandler {
         Matcher matcher = compile.matcher(referer);
         String redirectUrl = null;
         if(matcher.matches()){
-            redirectUrl = matcher.group(3);
+            redirectUrl = decode(matcher.group(3));
         }else{
             httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error: id tag");
             return;
