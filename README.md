@@ -47,4 +47,9 @@ and access_token as response to user.
   1. [https://www.bezkoder.com/spring-boot-jwt-mysql-spring-security-architecture](https://www.bezkoder.com/spring-boot-jwt-mysql-spring-security-architecture)
 
   2. [https://www.bezkoder.com/spring-boot-jwt-authentication/](https://www.bezkoder.com/spring-boot-jwt-authentication/)
+- Udemy tutorials
+   1. `Spring Boot Security and oAuth2 in depth from scratch`
+   2. `OAuth 2-0 in Spring Boot Applications`
+   3. `Spring Security Zero to Master along with JWT,OAUTH2`
+
 
