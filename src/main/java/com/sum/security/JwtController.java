@@ -19,7 +19,13 @@ public class JwtController {
     @Autowired
     OAuth2AuthorizedClientService clientService;
 
-    @GetMapping("/token")
+    /**
+     * A sample api which upon validation of user credentials with Auth0 openid connect,
+     * get details of IdToken and AccessToken and sends it to the user.
+     * @param principal
+     * @return
+     */
+    @GetMapping("/oauth2/token")
     public Token getAuth(@AuthenticationPrincipal OidcUser principal){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;

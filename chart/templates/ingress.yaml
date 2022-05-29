@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "ldapauthentication.fullname" . -}}
+{{- $fullName := include "kubeauthentication.fullname" . -}}
 {{- $servicePort := .Values.service.port -}}
 {{- $ingressPath := .Values.ingress.path -}}
 apiVersion: networking.k8s.io/v1
@@ -7,8 +7,8 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app: {{ template "ldapauthentication.name" . }}
-    chart: {{ template "ldapauthentication.chart" . }}
+    app: {{ template "kubeauthentication.name" . }}
+    chart: {{ template "kubeauthentication.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 {{- with .Values.ingress.annotations }}

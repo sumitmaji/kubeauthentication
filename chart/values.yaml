@@ -1,11 +1,11 @@
-# Default values for ldapauthentication.
+# Default values for kubeauthentication.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: master.cloud.com:5000/ldapauthentication
+  repository: master.cloud.com:5000/kubeauthentication
   tag: latest
   pullPolicy: Always
   port: 8001
@@ -18,11 +18,11 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
-    #nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/proxy-redirect-from: "default"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_redirect https://master.cloud.com https://master.cloud.com;
       proxy_redirect http://master.cloud.com https://master.cloud.com;
+      #proxy_redirect ~^https(.*)(redirect_uri=)(http)(.*) https$1$2https$4; #Edit the location header
   path: /
   hosts:
     - master.cloud.com
