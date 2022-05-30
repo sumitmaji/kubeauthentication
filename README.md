@@ -66,27 +66,10 @@ alias kctl='kubectl --kubeconfig=/root/oauth.conf --token=$(python3 /root/kubern
 
 - Good Slides to learn about Oauth
 
-```html
-<p><strong>OAuth 2 Grant Types</strong></p>
-<ul>
-    <li><p><a
-            href="https://docs.google.com/presentation/d/1CiAiuay5rd1KDDnYwOyu6ud9xk5ZetSQDOMp9DYUKjs/edit?usp=sharing"
-            rel="noopener noreferrer" target="_blank">Authorization Code Grant Type</a></p></li>
-    <li><p><a
-            href="https://docs.google.com/presentation/d/1KEA3i0F0bhB4me1uHfXkbmuaaFeRyxo7rG0ih-MlP68/edit?usp=sharing"
-            rel="noopener noreferrer" target="_blank">Client Credentials</a></p></li>
-    <li><p><a
-            href="https://docs.google.com/presentation/d/1kea9VCSP_QtQSb_NbU7MPOVLEF20iuOgieNW1g1MTwc/edit?usp=sharing"
-            rel="noopener noreferrer" target="_blank">Password</a></p></li>
-    <li><p><a
-            href="https://docs.google.com/presentation/d/1SlGr9z9bFIxYOLzwwZco3ny2W1XZ-9GJ9ORWA73gbjo/edit?usp=sharing"
-            rel="noopener noreferrer" target="_blank">Device flow</a></p></li>
-    <li><p><a
-            href="https://docs.google.com/presentation/d/1yJeYPMoPY2050cZkkBcBu1SL5Z88StV7O7fH5f_6X3A/edit?usp=sharing"
-            rel="noopener noreferrer" target="_blank">PKCE-Enhanced Authorization code</a></p></li>
-    <li><p><a
-            href="https://docs.google.com/presentation/d/1e0bWzKk5JxxGXlAvAyeWe1q8iYgY804Y6vZ-zCpRAKU/edit?usp=sharing"
-            rel="noopener noreferrer" target="_blank">Refreshing Access Token</a></p></li>
-</ul>
-```
-
+### OAuth 2 Grant Types
+1. [`Authorization Code Grant Type`](https://docs.google.com/presentation/d/1CiAiuay5rd1KDDnYwOyu6ud9xk5ZetSQDOMp9DYUKjs/edit?usp=sharing)
+2. [`Client Credentials`](https://docs.google.com/presentation/d/1KEA3i0F0bhB4me1uHfXkbmuaaFeRyxo7rG0ih-MlP68/edit?usp=sharing)
+3. [`Password`](https://docs.google.com/presentation/d/1kea9VCSP_QtQSb_NbU7MPOVLEF20iuOgieNW1g1MTwc/edit?usp=sharing)
+4. [`Device flow`](https://docs.google.com/presentation/d/1SlGr9z9bFIxYOLzwwZco3ny2W1XZ-9GJ9ORWA73gbjo/edit?usp=sharing)
+5. [`PKCE-Enhanced Authorization code`](https://docs.google.com/presentation/d/1yJeYPMoPY2050cZkkBcBu1SL5Z88StV7O7fH5f_6X3A/edit?usp=sharing)
+6. [`Refreshing Access Token`](https://docs.google.com/presentation/d/1e0bWzKk5JxxGXlAvAyeWe1q8iYgY804Y6vZ-zCpRAKU/edit?usp=sharing)
