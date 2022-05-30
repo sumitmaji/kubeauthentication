@@ -75,3 +75,5 @@ alias kctl='kubectl --kubeconfig=/root/oauth.conf --token=$(python3 /root/kubern
 4. [`Device flow`](https://docs.google.com/presentation/d/1SlGr9z9bFIxYOLzwwZco3ny2W1XZ-9GJ9ORWA73gbjo/edit?usp=sharing)
 5. [`PKCE-Enhanced Authorization code`](https://docs.google.com/presentation/d/1yJeYPMoPY2050cZkkBcBu1SL5Z88StV7O7fH5f_6X3A/edit?usp=sharing)
 6. [`Refreshing Access Token`](https://docs.google.com/presentation/d/1e0bWzKk5JxxGXlAvAyeWe1q8iYgY804Y6vZ-zCpRAKU/edit?usp=sharing)
+
+### Information about Cors and Csrf [`Link`](https://docs.google.com/presentation/d/1to1mP1R01DNK80GrWP6b64I_l0PJ6pMxECLyTo2Uf9o/edit?usp=sharing)
