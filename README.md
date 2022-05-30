@@ -56,8 +56,10 @@ alias kctl='kubectl --kubeconfig=/root/oauth.conf --token=$(python3 /root/kubern
 
 - Below links provide good architecture and code examples of customizing spring security
     1. [https://www.bezkoder.com/spring-boot-jwt-mysql-spring-security-architecture](https://www.bezkoder.com/spring-boot-jwt-mysql-spring-security-architecture)
+    It Implements below architecture
+    ![alt text](https://github.com/sumitmaji/kubeauthentication/blob/main/images/img.png)
 
-    2. [https://www.bezkoder.com/spring-boot-jwt-authentication/](https://www.bezkoder.com/spring-boot-jwt-authentication/)
+    3. [https://www.bezkoder.com/spring-boot-jwt-authentication/](https://www.bezkoder.com/spring-boot-jwt-authentication/)
 - Udemy tutorials
     1. `Spring Boot Security and oAuth2 in depth from scratch`
     2. `OAuth 2-0 in Spring Boot Applications`
