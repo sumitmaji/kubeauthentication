@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +23,8 @@ import java.util.List;
 @RestController
 public class KubeController {
 
-    private String grantType = "http://auth0.com/oauth/grant-type/password-realm";
+    @Value(value = "${oauth.passwordGrantType}")
+    private String passwordGrantType;
 
     @Value(value = "${oauth.clientId}")
     private String clientId;
@@ -58,7 +58,7 @@ public class KubeController {
      */
     @GetMapping("/kubectl")
     public String getToken(@RequestParam String username, @RequestParam String password) {
-        Payload payload = new Payload(grantType, username, password, clientId,
+        Payload payload = new Payload(passwordGrantType, username, password, clientId,
                 clientSecret, realm, "openid", audience);
         String retrieve = "";
         WebClient webClient = WebClient.create(issuerUrl);

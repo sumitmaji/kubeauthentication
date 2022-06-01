@@ -28,3 +28,4 @@ oauth:
   registrationId: keycloak
   issuerUtl: http://${keycloak.server.uri}/realms/microservicedev
   tokenEndpoint: /protocol/openid-connect/token
+  passwordGrantType: password
