@@ -15,10 +15,12 @@ public class OAuth0WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .antMatcher("/**/oauth2/**")
+                .requestMatchers()
+                .antMatchers("/**/oauth2/**", "/welcome")
+                .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/oauth2/token").authenticated()
+                .antMatchers("/oauth2/token", "/welcome").authenticated()
                 .and()
                 .oauth2Login()
                 .and()

@@ -38,6 +38,12 @@ public class KubeController {
     @Value(value = "${oauth.audience}")
     private String audience;
 
+    @Value(value = "${oauth.issuerUrl}")
+    private String issuerUrl;
+
+    @Value(value = "${oauth.tokenEndpoint}")
+    private String tokenEndpoint;
+
     /**
      * This api validates user credentials with Auth0 openid connect.
      * If the authentication is successful, then it returns id_token and access_token.
@@ -55,10 +61,10 @@ public class KubeController {
         Payload payload = new Payload(grantType, username, password, clientId,
                 clientSecret, realm, "openid", audience);
         String retrieve = "";
-        WebClient webClient = WebClient.create("https://skmaji.auth0.com");
+        WebClient webClient = WebClient.create(issuerUrl);
         try {
             retrieve = webClient.post()
-                    .uri("/oauth/token")
+                    .uri(tokenEndpoint)
                     .body(Mono.just(payload), Payload.class)
                     .retrieve()
                     .bodyToMono(String.class).block();
