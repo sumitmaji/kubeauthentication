@@ -19,13 +19,13 @@ oauth:
   clientId: microserviceclient
   clientSecret:
   realm: microservicedev
-  audience: http://${keycloak.server.uri}/realms/microservicedev/protocol/openid-connect/userinfo
-  authorizeUrl: http://${keycloak.server.uri}/realms/microservicedev/protocol/openid-connect/auth
-  tokenUrl: http://${keycloak.server.uri}/realms/microservicedev/protocol/openid-connect/token
-  userInfoUrl: http://${keycloak.server.uri}/realms/microservicedev/protocol/openid-connect/userinfo
+  audience: http://${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/userinfo
+  authorizeUrl: http://${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/auth
+  tokenUrl: http://${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/token
+  userInfoUrl: http://${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/userinfo
   clientName: keycloak
-  jwkUrl: http://${keycloak.server.uri}/realms/microservicedev/protocol/openid-connect/certs
+  jwkUrl: http://${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/certs
   registrationId: keycloak
-  issuerUtl: http://${keycloak.server.uri}/realms/microservicedev
+  issuerUtl: http://${keycloak.server.uri}/realms/${oauth.realm}
   tokenEndpoint: /protocol/openid-connect/token
   passwordGrantType: password
