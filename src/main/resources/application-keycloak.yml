@@ -1,0 +1,30 @@
+#server.ssl.key-store-password=tomcat
+#server.ssl.key-store=classpath:mykeystore.p12
+#server.ssl.key-store-type=PKCS12
+#server.ssl.key-alias=tomcat
+#server.port=8001
+#logging.level.org.springframework=DEBUG
+#server.use-forward-headers=true
+#server.servlet.context-path=/ldapauthentication
+#server.tomcat.use-relative-redirects=true
+
+server:
+  tomcat:
+    use-relative-redirects: true
+
+keycloak:
+  server:
+    uri: http://localhost:8080
+oauth:
+  clientId: microserviceclient
+  clientSecret:
+  realm: microservicedev
+  audience: http://${keycloak.server.uri}/realms/microservicedev/protocol/openid-connect/userinfo
+  authorizeUrl: http://${keycloak.server.uri}/realms/microservicedev/protocol/openid-connect/auth
+  tokenUrl: http://${keycloak.server.uri}/realms/microservicedev/protocol/openid-connect/token
+  userInfoUrl: http://${keycloak.server.uri}/realms/microservicedev/protocol/openid-connect/userinfo
+  clientName: keycloak
+  jwkUrl: http://${keycloak.server.uri}/realms/microservicedev/protocol/openid-connect/certs
+  registrationId: keycloak
+  issuerUtl: http://${keycloak.server.uri}/realms/microservicedev
+  tokenEndpoint: /protocol/openid-connect/token
