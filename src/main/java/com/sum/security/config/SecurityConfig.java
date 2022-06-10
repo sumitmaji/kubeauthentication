@@ -40,6 +40,8 @@ public class SecurityConfig {
 
 
     private ClientRegistration clientRegistration(){
+        System.out.println(clientId);
+        System.out.println(clientSecret);
         ClientRegistration build = ClientRegistration.withRegistrationId(registrationId)
                 .clientId(clientId)
                 .clientSecret(clientSecret)
