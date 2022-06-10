@@ -10,6 +10,8 @@ def main():
   sys.stderr.write("Client Secret: ")
   clientSecret = input()
 
+  os.chmod('./run_kubeauth.sh', 0o700)
+
   os.system("./run_kubeauth.sh -i "+clientId+" -s "+clientSecret)
 
 
