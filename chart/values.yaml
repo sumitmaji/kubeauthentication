@@ -18,6 +18,7 @@ secret:
   enabled: true
 
 env:
+  enabled: true
   normal: {}
   secret:
     CLIENT_ID: __CLIENT_ID__
