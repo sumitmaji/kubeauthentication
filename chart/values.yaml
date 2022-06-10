@@ -14,6 +14,15 @@ service:
   type: ClusterIP
   port: 8001
 
+secret:
+  enabled: true
+
+env:
+  normal: {}
+  secret:
+    CLIENT_ID: __CLIENT_ID__
+    CLIENT_SECRET: __CLIENT_SECRET__
+
 ingress:
   enabled: true
   annotations:
