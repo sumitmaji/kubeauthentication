@@ -58,6 +58,8 @@ public class KubeController {
      */
     @GetMapping("/kubectl")
     public String getToken(@RequestParam String username, @RequestParam String password) {
+        System.out.println("Client Id: " + clientId);
+        System.out.println("Client Secret: " + clientSecret);
         Payload payload = new Payload(passwordGrantType, username, password, clientId,
                 clientSecret, realm, "openid", audience);
         String retrieve = "";
