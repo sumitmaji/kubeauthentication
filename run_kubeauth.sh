@@ -33,8 +33,8 @@ fi
 
 
 
-CLIENT_ID=`echo $CLIENT_ID | base64 | tr -d '\n'`
-CLIENT_SECRET=`echo $CLIENT_SECRET | base64 | tr -d '\n'`
+#CLIENT_ID=`echo $CLIENT_ID | base64 | tr -d '\n'`
+#CLIENT_SECRET=`echo $CLIENT_SECRET | base64 | tr -d '\n'`
 
 #if [[ "$(docker images -q $REPO_NAME 2> /dev/null)" == "" ]]; then
 ./build.sh
