@@ -25,7 +25,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.env }}
           env:
-          {{ - include "helpers.list-env-variables" . | indent 6 }}
+          {{- include "helpers.list-env-variables" . | indent 6 }}
           {{- end }}
           ports:
             - name: http
