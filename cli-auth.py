@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import sys
+import os
 
 def main():
   sys.stderr.write("Client Id: ")
