@@ -23,6 +23,10 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.env.enabled }}
+          env:
+          {{- include "helpers.list-env-variables" . | indent 10 }}
+          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.image.port }}

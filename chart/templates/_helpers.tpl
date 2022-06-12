@@ -30,3 +30,22 @@ Create chart name and version as used by the chart label.
 {{- define "kubeauthentication.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{/*
+Fetch list of environment variables
+*/}}
+
+{{- define "helpers.list-env-variables" -}}
+{{- $fullName := include "kubeauthentication.fullname" . -}}
+{{- range $key, $val := .Values.env.secret }}
+- name: {{ $key }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ $fullName }}
+      key: {{ $key }}
+{{- end -}}
+{{- range $key, $val := .Values.env.normal }}
+- name: {{ $key }}
+  value: {{ $val | quote }}
+{{- end -}}
+{{- end -}}
