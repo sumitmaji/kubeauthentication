@@ -29,7 +29,7 @@ cd /root/kubeauthentication
 
 # Information about the service
 
-1. it provides `/kubeauth` rest api for authentication
+1. it provides `/kubectl` rest api for authentication
    via [`cli`](https://github.com/sumitmaji/kubernetes/tree/master/install_k8s/kube-login).
    The api returns the id_token which is used by cli to provide to kubernetes service. it uses Auth0 OpenId
    connect for authentication.
