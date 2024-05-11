@@ -25,7 +25,8 @@ cd /root/kubeauthentication
    4. [`application.yml`](https://github.com/sumitmaji/kubeauthentication/blob/main/src/main/resources/application.yml)
        should contains
        oauth2 details for authentication to work.
-   5. ![img_1.png](images/img_1.png)
+   5. Please refer [link](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens) to understand authentication using OIDC
+   6. ![img_1.png](images/img_1.png)
 
 
 # Information about the service
