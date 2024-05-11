@@ -17,15 +17,16 @@ cd /root/kubeauthentication
     1. Client ID
     2. Client Secret
     3. Realm
-    4.
     The [`Link`](https://manage.auth0.com/dashboard/us/skmaji/applications/C3UHISO3z60iF1JLG8L7VPUSWOASrJfO/quickstart)
     contains
     how to set up application and use oauth. For setting up Auth0 also look into `Edward Viaene` tutorial
     on `Learn DevOps: Advanced Kubernetes Usage`.
     In this tutorial go to `authentication` and `authorization` video.
-    6. [`application.yml`](https://github.com/sumitmaji/kubeauthentication/blob/main/src/main/resources/application.yml)
+   4. [`application.yml`](https://github.com/sumitmaji/kubeauthentication/blob/main/src/main/resources/application.yml)
        should contains
        oauth2 details for authentication to work.
+   5. ![img_1.png](images/img_1.png)
+
 
 # Information about the service
 
