@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: master.cloud.com:5000/kubeauthentication
+  repository: registry.gokcloud.com/kubeauthentication
   tag: latest
   pullPolicy: Always
   port: 8001
