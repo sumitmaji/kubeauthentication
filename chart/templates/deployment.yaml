@@ -19,10 +19,10 @@ spec:
         app: {{ template "kubeauthentication.name" . }}
         release: {{ .Release.Name }}
     spec:
-      {{ - if .Values.privateReg.enabled }}
+      {{- if .Values.privateReg.enabled }}
       imagePullSecrets:
         - name: {{ .Values.privateReg.secret }}
-      {{ - end }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
