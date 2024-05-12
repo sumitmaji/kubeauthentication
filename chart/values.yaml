@@ -24,6 +24,10 @@ env:
     CLIENT_ID: __CLIENT_ID__
     CLIENT_SECRET: __CLIENT_SECRET__
 
+privateReg:
+  enabled: true
+  secret: regcred
+
 ingress:
   enabled: true
   annotations:

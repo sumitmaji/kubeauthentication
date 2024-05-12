@@ -10,9 +10,15 @@ def main():
   sys.stderr.write("Client Secret: ")
   clientSecret = input()
 
+  sys.stderr.write("Docker User: ")
+  dockerUser = input()
+
+  sys.stderr.write("Docker Password: ")
+  dockerPwd = input()
+
   os.chmod('./run_kubeauth.sh', 0o700)
 
-  os.system("./run_kubeauth.sh -i "+clientId+" -s "+clientSecret)
+  os.system("./run_kubeauth.sh -i "+clientId+" -s "+clientSecret+" -u "+dockerUser+" -p "+dockerPwd)
 
 
 if __name__ == '__main__':

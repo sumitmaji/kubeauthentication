@@ -14,6 +14,14 @@ while [ $# -gt 0 ]; do
         shift
         CLIENT_SECRET=$1
         ;;
+        -u | --user)
+        shift
+        DOCKER_USER=$1
+        ;;
+        -p | --password)
+        shift
+        DOCKER_PASSWORD=$1
+        ;;
     esac
 shift
 done
@@ -44,5 +52,6 @@ fi
 sed -i "s/__CLIENT_ID__/${CLIENT_ID}/g" chart/values.yaml
 sed -i "s/__CLIENT_SECRET__/${CLIENT_SECRET}/g" chart/values.yaml
 
+kubectl create secret docker-registry regcred --docker-server=$REGISTRY --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD
 helm uninstall $RELEASE_NAME
 helm install $RELEASE_NAME $PATH_TO_CHART

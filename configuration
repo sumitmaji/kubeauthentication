@@ -1,5 +1,5 @@
 IMAGE_NAME=sumit/kubeauthentication
-REGISTRY=master.cloud.com:5000
+REGISTRY=registry.gokcloud.com
 REPO_NAME=kubeauthentication
 CONTAINER_NAME=kubeauthentication
 BUILD_PATH=/tmp
