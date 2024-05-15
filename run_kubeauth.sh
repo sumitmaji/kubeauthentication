@@ -55,12 +55,11 @@ sed -i "s/__CLIENT_ID__/${CLIENT_ID}/g" chart/values.yaml
 sed -i "s/__CLIENT_SECRET__/${CLIENT_SECRET}/g" chart/values.yaml
 
 SECRET_NAME=regcred
-helm uninstall $RELEASE_NAME -n $RELEASE_NAME
-helm install $RELEASE_NAME $PATH_TO_CHART \
-  --namespace $RELEASE_NAME \
-  --create-namespace
-
+kubectl create ns $RELEASE_NAME
 kubectl get secret $SECRET_NAME >/dev/null 2>&1 || kubectl create secret docker-registry $SECRET_NAME --docker-server=$REGISTRY --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD -n $RELEASE_NAME
 
+helm uninstall $RELEASE_NAME -n $RELEASE_NAME
+helm install $RELEASE_NAME $PATH_TO_CHART \
+  --namespace $RELEASE_NAME
 
 patchCertManager "$RELEASE_NAME" "$RELEASE_NAME" $(defaultSubdomain)
