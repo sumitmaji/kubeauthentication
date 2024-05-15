@@ -1,0 +1,134 @@
+#!/bin/bash
+
+source $MOUNT_PATH/root_config
+
+getLetsEncEnv(){
+  echo ${LETS_ENCRYPT_ENV}
+}
+
+getLetsEncryptUrl(){
+  [[ getLetsEncEnv = 'prod' ]] && echo "$LETS_ENCRYPT_PROD_URL" || echo "$LETS_ENCRYPT_STAGING_URL"
+}
+
+getClusterIssuerName(){
+  case "$CERTMANAGER_CHALANGE_TYPE" in
+   'dns') echo "letsencrypt-$(getLetsEncEnv)" ;;
+   'http') echo "letsencrypt-$(getLetsEncEnv)" ;;
+   'selfsigned') echo "gokselfsign-ca-cluster-issuer" ;;
+  esac
+}
+
+rootDomain(){
+  echo "$GOK_ROOT_DOMAIN"
+}
+
+sedRootDomain(){
+  rootDomain | sed 's/\./-/g'
+}
+
+registrySubdomain(){
+  echo "$REGISTRY"
+}
+
+defaultSubdomain(){
+  echo "$DEFAULT_SUBDOMAIN"
+}
+
+keycloakSubdomain(){
+  echo "$KEYCLOAK"
+}
+
+fullDefaultUrl(){
+  echo "${DEFAULT_SUBDOMAIN}.${GOK_ROOT_DOMAIN}"
+}
+
+fullRegistryUrl(){
+  echo "${REGISTRY}.${GOK_ROOT_DOMAIN}"
+}
+
+fullKeycloakUrl(){
+  echo "${KEYCLOAK}.${GOK_ROOT_DOMAIN}"
+}
+
+echoSuccess(){
+  echo -e "\e[32m$1\e[0m"
+}
+
+echoFailed(){
+  echo -e "\e[31m$1\e[0m"
+}
+
+echoWarning(){
+  echo -e "\e[32m$1\e[0m"
+}
+
+replaceEnvVariable(){
+  wget -O- $1 | envsubst
+}
+
+decodeSecret(){
+  SECRET=$1
+  NS=$2
+  kubectl get secret -n $NS $SECRET -o json | jq -r '.data."tls.crt"' | base64 -d | openssl x509 -noout -text
+}
+
+patchLdapSecure() {
+  kubectl patch ing "$NAME" --patch "$(
+    cat <<EOF
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/auth-signin: https://$(defaultSubdomain).$(rootDomain)/authenticate
+    nginx.ingress.kubernetes.io/auth-url: https://$(defaultSubdomain).$(rootDomain)/check
+EOF
+  )" -n "$NS"
+}
+
+patchCertManager() {
+  NAME=$1
+  NS=$2
+  SUBDOMAIN=$(subDomain $3)
+
+  kubectl patch ing "$NAME" --patch "$(
+    cat <<EOF
+metadata:
+  annotations:
+    #certmanager.k8s.io/cluster-issuer: $(getClusterIssuerName)
+    cert-manager.io/cluster-issuer: $(getClusterIssuerName)
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+    - hosts:
+        - ${SUBDOMAIN}.$(rootDomain)
+      secretName: ${SUBDOMAIN}-$(sedRootDomain)
+EOF
+  )" -n "$NS"
+  kubectl patch ing "$NAME" --type=json -p='[{"op": "replace", "path": "/spec/rules/0/host", "value":"'$SUBDOMAIN'.'$(rootDomain)'"}]' -n "$NS"
+
+  kubectl --timeout=10s -n ${NS} wait --for=condition=Ready certificates.cert-manager.io ${SUBDOMAIN}-$(sedRootDomain)
+}
+
+
+patchLocalTls() {
+  NAME=$1
+  NS=$2
+  kubectl patch ing "$NAME" --patch "$(
+    cat <<EOF
+spec:
+  tls:
+    - hosts:
+        - $APP_HOST
+      secretName: appingress-certificate
+EOF
+  )" -n "$NS"
+  kubectl patch ing "$NAME" --type=json -p='[{"op": "replace", "path": "/spec/rules/0/host", "value":"master.cloud.com"}]' -n "$NS"
+  kubectl patch ing "$NAME" --type=json -p='[{"op": "add", "path": "/metadata/annotations", "value":{"nginx.ingress.kubernetes.io/rewrite-target": "/", "kubernetes.io/ingress.class": "nginx"}}]' -n "$NS"
+}
+
+kcd(){
+  alias kcd='kubectl config set-context $(kubectl config current-context) --namespace'
+}
+
+k(){
+  alias k='kubectl'
+}
+
