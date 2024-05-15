@@ -2,6 +2,14 @@
 
 source $MOUNT_PATH/root_config
 
+subDomain(){
+  if [ -z $1 ]; then
+    echo "$(defaultSubdomain)"
+  else
+    echo "$1"
+  fi
+}
+
 getLetsEncEnv(){
   echo ${LETS_ENCRYPT_ENV}
 }
