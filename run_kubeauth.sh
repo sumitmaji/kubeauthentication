@@ -58,16 +58,6 @@ SECRET_NAME=regcred
 kubectl get secret $SECRET_NAME >/dev/null 2>&1 || kubectl create secret docker-registry $SECRET_NAME --docker-server=$REGISTRY --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD
 helm uninstall $RELEASE_NAME
 helm install $RELEASE_NAME $PATH_TO_CHART \
-  --set ingress.annotations="$(
-                                 cat <<EOF
-                                 kubernetes.io/ingress.class: nginx
-                                 nginx.ingress.kubernetes.io/proxy-redirect-from: "default"
-                                 nginx.ingress.kubernetes.io/configuration-snippet: |
-                                   proxy_redirect https://master.cloud.com https://master.cloud.com;
-                                   proxy_redirect http://master.cloud.com https://master.cloud.com;
-                                   #proxy_redirect ~^https(.*)(redirect_uri=)(http)(.*) https$1$2https$4; #Edit the location header
-                             EOF
-                               )" \
   --namespace $RELEASE_NAME \
   --create-namespace
 
