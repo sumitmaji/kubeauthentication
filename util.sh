@@ -82,7 +82,6 @@ viewcert(){
     key=${arr[1]}
     name=$(echo "$data" | grep "${index}>>" | awk '{print $2}')
     echo "decoding data for $name"
-    kubectl logs "$name" -n $RELEASE_NAME
     kubectl get secret -n $RELEASE_NAME $name -o json | jq -r '.data."'$key'"' | \
      base64 -d | openssl x509 -noout -text
 }
@@ -102,7 +101,6 @@ decode(){
   key=${arr[1]}
   name=$(echo "$data" | grep "${index}>>" | awk '{print $2}')
   echo "decoding data for $name"
-  kubectl logs "$name" -n $RELEASE_NAME
   kubectl get secret -n $RELEASE_NAME $name -o json | jq -r '.data."'$key'"' | base64 -d
 }
 
