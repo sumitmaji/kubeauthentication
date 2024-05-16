@@ -11,7 +11,9 @@ release(){
 }
 
 kcd(){
-  alias kcd='kubectl config set-context $(kubectl config current-context) --namespace'
+  #alias kcd='kubectl config set-context $(kubectl config current-context) --namespace'
+  kubectl config set-context $(kubectl config current-context) --namespace $1
+  release $1
 }
 
 k(){
