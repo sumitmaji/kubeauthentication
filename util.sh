@@ -39,9 +39,14 @@ bash(){
 }
 
 desc(){
-  pod=$(getpod)
+  type=$1
+  data=$(kubectl get $type -n $RELEASE_NAME 2>/dev/null | sed -e '1d' | awk '{printf "%dxx\t%s\n", NR, $0}')
+  echo "$data"
+  echo "Enter Index Number to view resource"
+  read INDEX
+  name=$(echo "$data" | grep "${INDEX}xx" | awk '{print $2}')
   echo "Describing pod $pod"
-  kubectl describe po "$pod" -n $RELEASE_NAME
+  kubectl describe $type "$name" -n $RELEASE_NAME
 }
 
 logs(){
