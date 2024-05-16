@@ -4,18 +4,10 @@ source $MOUNT_PATH/root_config
 
 source configuration
 
+: ${RELEASE_NAME:=$(kubectl config get-contexts  | sed -e '1d' | awk '{print $5}')}
+
 kcd(){
   alias kcd='kubectl config set-context $(kubectl config current-context) --namespace'
-}
-
-getData(){
-  type=$1
-  data=$(kubectl get $type -n $RELEASE_NAME 2>/dev/null | sed -e '1d' | awk '{printf "%d>>\t%s\n", NR, $0}')
-  echo "$data"
-  echo "Enter Index Number to view resource"
-  read INDEX
-  name=$(echo "$data" | grep "${INDEX}>>" | awk '{print $2}')
-  echo "$name"
 }
 
 k(){
@@ -33,26 +25,34 @@ pods(){
 }
 
 bash(){
-  pod=$(getpod)
-  echo "Opening terminal on $pod"
-  kubectl exec -it "$pod" -n $RELEASE_NAME -- /bin/bash
+  data=$(kubectl get po -n $RELEASE_NAME 2>/dev/null | sed -e '1d' | awk '{printf "%d>>\t%s\n", NR, $0}')
+  echo "$data"
+  echo "Enter Index Number to view resource"
+  read INDEX
+  name=$(echo "$data" | grep "${INDEX}>>" | awk '{print $2}')
+  echo "Opening terminal on $name"
+  kubectl exec -it "$name" -n $RELEASE_NAME -- /bin/bash
 }
 
 desc(){
   type=$1
-  data=$(kubectl get $type -n $RELEASE_NAME 2>/dev/null | sed -e '1d' | awk '{printf "%dxx\t%s\n", NR, $0}')
+  data=$(kubectl get $type -n $RELEASE_NAME 2>/dev/null | sed -e '1d' | awk '{printf "%d>>\t%s\n", NR, $0}')
   echo "$data"
   echo "Enter Index Number to view resource"
   read INDEX
-  name=$(echo "$data" | grep "${INDEX}xx" | awk '{print $2}')
-  echo "Describing pod $pod"
+  name=$(echo "$data" | grep "${INDEX}>>" | awk '{print $2}')
+  echo "Describing pod $name"
   kubectl describe $type "$name" -n $RELEASE_NAME
 }
 
 logs(){
-  pod=$(getpod)
-  echo "Viewing logs of pod $pod"
-  kubectl logs "$pod" -n $RELEASE_NAME
+  data=$(kubectl get po -n $RELEASE_NAME 2>/dev/null | sed -e '1d' | awk '{printf "%d>>\t%s\n", NR, $0}')
+  echo "$data"
+  echo "Enter Index Number to view resource"
+  read INDEX
+  name=$(echo "$data" | grep "${INDEX}>>" | awk '{print $2}')
+  echo "Viewing logs of pod $name"
+  kubectl logs "$name" -n $RELEASE_NAME
 }
 
 subDomain(){
