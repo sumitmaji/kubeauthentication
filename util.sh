@@ -141,7 +141,7 @@ tagpush(){
   docker push $(fullRegistryUrl)/$REPO_NAME
 }
 
-build(){
+buildapp(){
   source configuration
   docker build -t $IMAGE_NAME
 }
