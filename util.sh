@@ -6,6 +6,10 @@ source configuration
 
 : ${RELEASE_NAME:=$(kubectl config get-contexts  | sed -e '1d' | awk '{print $5}')}
 
+release(){
+  RELEASE_NAME=$1
+}
+
 kcd(){
   alias kcd='kubectl config set-context $(kubectl config current-context) --namespace'
 }
