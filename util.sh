@@ -1,5 +1,5 @@
 #!/bin/bash
-
+[[ "TRACE" ]] && set -x
 source $MOUNT_PATH/root_config
 
 source configuration
