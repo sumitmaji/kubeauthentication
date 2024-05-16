@@ -87,6 +87,7 @@ public class KubeController {
                     .bodyToMono(String.class).block();
 
         } catch (WebClientResponseException | SSLException e) {
+            e.printStackTrace();
             return "{\"error\": \"Error while fetching data\", \"error_description\": \"" + e.getMessage() + "\"}";
         }
 
