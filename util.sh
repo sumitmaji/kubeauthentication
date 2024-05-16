@@ -65,14 +65,21 @@ logs(){
 
 decode(){
   content=$1
-  data=$(kubectl get sec -n $RELEASE_NAME 2>/dev/null | sed -e '1d' | awk '{printf "%d>>\t%s\n", NR, $0}')
+  data=$(kubectl get secret  -o json | \
+      jq -r '[ .items[] | {name: .metadata.name, value: .data | keys | join(",")} ]' | \
+      jq -r '.[] | [.name +"     "+ .value] | @tsv' | \
+      awk '{printf "%d>>\t%s\n", NR, $0}')
   echo "$data"
-  echo "Enter Index Number to view resource"
-  read INDEX
-  name=$(echo "$data" | grep "${INDEX}>>" | awk '{print $2}')
+  echo "Enter Index secret and secret data key(a,b)"
+  read input
+  IFS=','
+  read -ra arr <<< "$input"
+  index=${arr[0]}
+  key=${arr[1]}
+  name=$(echo "$data" | grep "${index}>>" | awk '{print $2}')
   echo "decoding data for $name"
   kubectl logs "$name" -n $RELEASE_NAME
-  kubectl get secret -n $RELEASE_NAME $name -o json | jq -r '.data."'$content'"' | base64 -d
+  kubectl get secret -n $RELEASE_NAME $name -o json | jq -r '.data."'$key'"' | base64 -d
 }
 
 subDomain(){
