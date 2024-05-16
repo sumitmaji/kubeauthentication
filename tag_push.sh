@@ -1,5 +1,6 @@
 #!/bin/bash
 
 source configuration
-docker tag $IMAGE_NAME $REGISTRY/$REPO_NAME
-docker push $REGISTRY/$REPO_NAME
+source util.sh
+docker tag $IMAGE_NAME $(fullRegistryUrl)/$REPO_NAME
+docker push $(fullRegistryUrl)/$REPO_NAME
