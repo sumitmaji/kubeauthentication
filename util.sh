@@ -8,11 +8,6 @@ kcd(){
   alias kcd='kubectl config set-context $(kubectl config current-context) --namespace'
 }
 
-k(){
-  alias k='kubectl'
-}
-
-
 getData(){
   type=$1
   data=$(kubectl get $type -n $RELEASE_NAME 2>/dev/null | sed -e '1d' | awk '{printf "%d>>\t%s\n", NR, $0}')
@@ -22,6 +17,11 @@ getData(){
   name=$(echo "$data" | grep "${INDEX}>>" | awk '{print $2}')
   echo "$name"
 }
+
+k(){
+  alias k='kubectl'
+}
+
 
 getpod() {
   pod=getData po
