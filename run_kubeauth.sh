@@ -61,7 +61,7 @@ kubectl get secret $SECRET_NAME >/dev/null 2>&1 || kubectl create secret docker-
 
 helm uninstall $RELEASE_NAME -n $RELEASE_NAME
 helm install $RELEASE_NAME $PATH_TO_CHART \
-  --set image.repository=https://$(fullRegistryUrl)/kubeauthentication \
+  --set image.repository=$(fullRegistryUrl)/kubeauthentication \
   --namespace $RELEASE_NAME
 
 patchCertManager "$RELEASE_NAME" "$RELEASE_NAME" $(defaultSubdomain)
