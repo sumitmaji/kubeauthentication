@@ -28,6 +28,10 @@ pods(){
   kubectl get po -n $RELEASE_NAME
 }
 
+all(){
+  kubectl get all -n -n $RELEASE_NAME
+}
+
 bash(){
   data=$(kubectl get po -n $RELEASE_NAME 2>/dev/null | sed -e '1d' | awk '{printf "%d>>\t%s\n", NR, $0}')
   echo "$data"
@@ -57,6 +61,18 @@ logs(){
   name=$(echo "$data" | grep "${INDEX}>>" | awk '{print $2}')
   echo "Viewing logs of pod $name"
   kubectl logs "$name" -n $RELEASE_NAME
+}
+
+decode(){
+  content=$1
+  data=$(kubectl get sec -n $RELEASE_NAME 2>/dev/null | sed -e '1d' | awk '{printf "%d>>\t%s\n", NR, $0}')
+  echo "$data"
+  echo "Enter Index Number to view resource"
+  read INDEX
+  name=$(echo "$data" | grep "${INDEX}>>" | awk '{print $2}')
+  echo "decoding data for $name"
+  kubectl logs "$name" -n $RELEASE_NAME
+  kubectl get secret -n $RELEASE_NAME $name -o json | jq -r '.data."'$content'"' | base64 -d
 }
 
 subDomain(){
