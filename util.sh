@@ -2,8 +2,6 @@
 
 source $MOUNT_PATH/root_config
 
-source configuration
-
 : ${RELEASE_NAME:=$(kubectl config get-contexts  | sed -e '1d' | awk '{print $5}')}
 
 release(){
