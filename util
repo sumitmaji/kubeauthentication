@@ -136,12 +136,12 @@ EOF
 
 tagpush(){
   source configuration
-  source util.sh
+  source util
   docker tag $IMAGE_NAME $(fullRegistryUrl)/$REPO_NAME
   docker push $(fullRegistryUrl)/$REPO_NAME
 }
 
 buildapp(){
   source configuration
-  docker build -t $IMAGE_NAME
+  docker build -t $IMAGE_NAME .
 }

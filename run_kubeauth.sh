@@ -2,7 +2,7 @@
 
 source configuration
 
-source util.sh
+source util
 
 : ${PATH_TO_CHART:=chart}
 
