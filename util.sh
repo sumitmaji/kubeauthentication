@@ -24,7 +24,7 @@ k(){
 
 
 getpod() {
-  pod=getData po
+  pod=$(getData po)
   echo "$pod"
 }
 
