@@ -1,8 +1,12 @@
 package com.sum.security;
 
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -15,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
+import reactor.netty.http.client.HttpClient;
 
+import javax.net.ssl.SSLException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
@@ -63,15 +69,24 @@ public class KubeController {
         Payload payload = new Payload(passwordGrantType, username, password, clientId,
                 clientSecret, realm, "openid", audience);
         String retrieve = "";
-        WebClient webClient = WebClient.create(issuerUrl);
+
         try {
+            SslContext sslContext = SslContextBuilder
+                    .forClient()
+                    .trustManager(InsecureTrustManagerFactory.INSTANCE)
+                    .build();
+            HttpClient httpClient = HttpClient.create().secure(t -> t.sslContext(sslContext));
+            WebClient webClient = WebClient
+                    .builder()
+                    .clientConnector(new ReactorClientHttpConnector(httpClient))
+                    .baseUrl(issuerUrl).build();
             retrieve = webClient.post()
                     .uri(tokenEndpoint)
                     .body(Mono.just(payload), Payload.class)
                     .retrieve()
                     .bodyToMono(String.class).block();
 
-        } catch (WebClientResponseException e) {
+        } catch (WebClientResponseException | SSLException e) {
             return "{\"error\": \"Error while fetching data\", \"error_description\": \"" + e.getMessage() + "\"}";
         }
 
