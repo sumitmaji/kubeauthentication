@@ -63,6 +63,10 @@ logs(){
   kubectl logs "$name" -n $RELEASE_NAME
 }
 
+ns(){
+  kubectl get ns
+}
+
 viewcert(){
   content=$1
     data=$(kubectl get secret -n $RELEASE_NAME  -o json | \
