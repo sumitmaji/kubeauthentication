@@ -18,7 +18,6 @@ k(){
   alias k='kubectl'
 }
 
-
 getpod() {
   pod=$(getData po)
   echo "$pod"
@@ -61,6 +60,17 @@ logs(){
   name=$(echo "$data" | grep "${INDEX}>>" | awk '{print $2}')
   echo "Viewing logs of pod $name"
   kubectl logs "$name" -n $RELEASE_NAME
+}
+
+edit(){
+  type=$1
+  data=$(kubectl get $type -n $RELEASE_NAME 2>/dev/null | sed -e '1d' | awk '{printf "%d>>\t%s\n", NR, $0}')
+  echo "$data"
+  echo "Enter Index Number to view resource"
+  read INDEX
+  name=$(echo "$data" | grep "${INDEX}>>" | awk '{print $2}')
+  echo "Describing pod $name"
+  kubectl edit $type "$name" -n $RELEASE_NAME
 }
 
 ns(){
