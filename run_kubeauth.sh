@@ -65,3 +65,6 @@ helm install $RELEASE_NAME $PATH_TO_CHART \
   --namespace $RELEASE_NAME
 
 patchCertManager "$RELEASE_NAME" "$RELEASE_NAME" $(defaultSubdomain)
+
+echo "Waiting for services to be up!!!!"
+kubectl --timeout=180s wait --for=condition=Ready pods --all --namespace "$RELEASE_NAME"
