@@ -2,6 +2,46 @@
 
 source $MOUNT_PATH/root_config
 
+source configuration
+
+
+getData(){
+  type=$1
+  data=$(kubectl get $type -n $RELEASE_NAME 2>/dev/null | sed -e '1d' | awk '{printf "%d>>\t%s\n", NR, $0}')
+  echo "$data"
+  echo "Enter Index Number to view resource"
+  read INDEX
+  name=$(echo "$data" | grep "${INDEX}>>" | awk '{print $2}')
+  echo "$name"
+}
+
+getpod() {
+  pod=getData po
+  echo "$pod"
+}
+
+pods(){
+  kubectl get po -n $RELEASE_NAME
+}
+
+bash(){
+  pod=$(getpod)
+  echo "Opening terminal on $pod"
+  kubectl exec -it "$pod" -n $RELEASE_NAME -- /bin/bash
+}
+
+desc(){
+  pod=$(getpod)
+  echo "Describing pod $pod"
+  kubectl describe po "$pod" -n $RELEASE_NAME
+}
+
+logs(){
+  pod=$(getpod)
+  echo "Viewing logs of pod $pod"
+  kubectl logs "$pod" -n $RELEASE_NAME
+}
+
 subDomain(){
   if [ -z $1 ]; then
     echo "$(defaultSubdomain)"
