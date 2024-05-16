@@ -22,6 +22,6 @@ oauth:
   clientName: OAuth0
   jwkUrl: https://skmaji.auth0.com/.well-known/jwks.json
   registrationId: auth0
-  issuerUtl: https://skmaji.auth0.com
+  issuerUrl: https://skmaji.auth0.com
   tokenEndpoint: /oauth/token
   passwordGrantType: http://auth0.com/oauth/grant-type/password-realm

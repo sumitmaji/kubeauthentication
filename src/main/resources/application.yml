@@ -1,17 +1,21 @@
 server:
   tomcat:
     use-relative-redirects: true
+
+keycloak:
+  server:
+    uri: https://keycloak.gokcloud.com
 oauth:
   clientId: ${CLIENT_ID}
   clientSecret: ${CLIENT_SECRET}
-  realm: Username-Password-Authentication
-  audience: https://skmaji.auth0.com/userinfo
-  authorizeUrl: https://skmaji.auth0.com/authorize
-  tokenUrl: https://skmaji.auth0.com/oauth/token
-  userInfoUrl: https://skmaji.auth0.com/userinfo
-  clientName: OAuth0
-  jwkUrl: https://skmaji.auth0.com/.well-known/jwks.json
-  registrationId: auth0
-  issuerUrl: https://skmaji.auth0.com
-  tokenEndpoint: /oauth/token
-  passwordGrantType: http://auth0.com/oauth/grant-type/password-realm
+  realm: GokDevelopers
+  audience: ${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/userinfo
+  authorizeUrl: ${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/auth
+  tokenUrl: ${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/token
+  userInfoUrl: ${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/userinfo
+  clientName: keycloak
+  jwkUrl: ${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/certs
+  registrationId: keycloak
+  issuerUrl: ${keycloak.server.uri}/realms/${oauth.realm}
+  tokenEndpoint: /protocol/openid-connect/token
+  passwordGrantType: password
