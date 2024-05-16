@@ -65,7 +65,7 @@ logs(){
 
 decode(){
   content=$1
-  data=$(kubectl get secret  -o json | \
+  data=$(kubectl get secret -n $RELEASE_NAME  -o json | \
       jq -r '[ .items[] | {name: .metadata.name, value: .data | keys | join(",")} ]' | \
       jq -r '.[] | [.name +"     "+ .value] | @tsv' | \
       awk '{printf "%d>>\t%s\n", NR, $0}')
