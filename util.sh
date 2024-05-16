@@ -91,6 +91,8 @@ EOF
   )" -n "$NS"
 }
 
+
+
 patchCertManager() {
   NAME=$1
   NS=$2
@@ -132,3 +134,14 @@ EOF
   kubectl patch ing "$NAME" --type=json -p='[{"op": "add", "path": "/metadata/annotations", "value":{"nginx.ingress.kubernetes.io/rewrite-target": "/", "kubernetes.io/ingress.class": "nginx"}}]' -n "$NS"
 }
 
+tagpush(){
+  source configuration
+  source util.sh
+  docker tag $IMAGE_NAME $(fullRegistryUrl)/$REPO_NAME
+  docker push $(fullRegistryUrl)/$REPO_NAME
+}
+
+build(){
+  source configuration
+  docker build -t $IMAGE_NAME
+}
