@@ -4,6 +4,14 @@ source $MOUNT_PATH/root_config
 
 source configuration
 
+kcd(){
+  alias kcd='kubectl config set-context $(kubectl config current-context) --namespace'
+}
+
+k(){
+  alias k='kubectl'
+}
+
 
 getData(){
   type=$1
@@ -170,13 +178,5 @@ EOF
   )" -n "$NS"
   kubectl patch ing "$NAME" --type=json -p='[{"op": "replace", "path": "/spec/rules/0/host", "value":"master.cloud.com"}]' -n "$NS"
   kubectl patch ing "$NAME" --type=json -p='[{"op": "add", "path": "/metadata/annotations", "value":{"nginx.ingress.kubernetes.io/rewrite-target": "/", "kubernetes.io/ingress.class": "nginx"}}]' -n "$NS"
-}
-
-kcd(){
-  alias kcd='kubectl config set-context $(kubectl config current-context) --namespace'
-}
-
-k(){
-  alias k='kubectl'
 }
 
