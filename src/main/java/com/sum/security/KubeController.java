@@ -6,16 +6,22 @@ import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.BodyInserter;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
@@ -24,7 +30,9 @@ import reactor.netty.http.client.HttpClient;
 import javax.net.ssl.SSLException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class KubeController {
@@ -68,6 +76,13 @@ public class KubeController {
         System.out.println("Client Secret: " + clientSecret);
         Payload payload = new Payload(passwordGrantType, username, password, clientId,
                 clientSecret, realm, "openid", audience);
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("client_id", "gok-developers-client");
+        map.add("client_secret", "XISt7H6LEf7AONkqZ6fzB1SQICQ9Lgfl");
+        map.add("username", "skmaji1");
+        map.add("password", "skmaji@0989");
+        map.add("scope", "openid");
+        map.add("grant_type", "password");
         String retrieve = "";
 
         try {
@@ -79,10 +94,11 @@ public class KubeController {
             WebClient webClient = WebClient
                     .builder()
                     .clientConnector(new ReactorClientHttpConnector(httpClient))
+                    .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                     .baseUrl(issuerUrl).build();
             retrieve = webClient.post()
                     .uri(tokenEndpoint)
-                    .body(Mono.just(payload), Payload.class)
+                    .body(BodyInserters.fromFormData(map))
                     .retrieve()
                     .bodyToMono(String.class).block();
 
