@@ -83,6 +83,9 @@ public class KubeController {
         map.add("password", "skmaji@0989");
         map.add("scope", "openid");
         map.add("grant_type", "password");
+        map.add("audience", "https://keycloak.gokcloud.com/realms/GokDevelopers/protocol/openid-connect/userinfo");
+        map.add("realm", "GokDevelopers");
+
         String retrieve = "";
 
         try {
