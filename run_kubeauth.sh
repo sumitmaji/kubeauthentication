@@ -24,6 +24,14 @@ while [ $# -gt 0 ]; do
         shift
         DOCKER_PASSWORD=$1
         ;;
+        -a | --activeprofile)
+        shift
+        ACTIVE_PROFILE=$1
+        ;;
+        -r | --realm)
+        shift
+        OAUTH_REALM=$1
+        ;;
     esac
 shift
 done
@@ -53,6 +61,8 @@ fi
 
 sed -i "s/__CLIENT_ID__/${CLIENT_ID}/g" chart/values.yaml
 sed -i "s/__CLIENT_SECRET__/${CLIENT_SECRET}/g" chart/values.yaml
+sed -i "s/__ACTIVE_PROFILE__/${ACTIVE_PROFILE}/g" chart/values.yaml
+sed -i "s/__OAUTH_REALM__/${OAUTH_REALM}/g" chart/values.yaml
 
 SECRET_NAME=regcred
 kubectl create ns $RELEASE_NAME
