@@ -4,24 +4,10 @@ logging:
       springframework:
         web: DEBUG
 
+spring:
+  profiles:
+    active: ${ACTIVE_PROFILE}
+
 server:
   tomcat:
     use-relative-redirects: true
-
-keycloak:
-  server:
-    uri: https://keycloak.gokcloud.com
-oauth:
-  clientId: gok-developers-client
-  clientSecret: XISt7H6LEf7AONkqZ6fzB1SQICQ9Lgfl
-  realm: GokDevelopers
-  audience: ${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/userinfo
-  authorizeUrl: ${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/auth
-  tokenUrl: ${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/token
-  userInfoUrl: ${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/userinfo
-  clientName: keycloak
-  jwkUrl: ${keycloak.server.uri}/realms/${oauth.realm}/protocol/openid-connect/certs
-  registrationId: keycloak
-  issuerUrl: ${keycloak.server.uri}/realms/${oauth.realm}
-  tokenEndpoint: /protocol/openid-connect/token
-  passwordGrantType: password
