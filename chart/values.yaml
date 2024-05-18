@@ -23,6 +23,8 @@ env:
   secret:
     CLIENT_ID: __CLIENT_ID__
     CLIENT_SECRET: __CLIENT_SECRET__
+    OAUTH_REALM: __OAUTH_REALM__
+    ACTIVE_PROFILE: __ACTIVE_PROFILE__
 
 privateReg:
   enabled: true

@@ -1,12 +1,8 @@
 package com.sum.security;
 
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+import com.sum.security.service.AuthService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -16,12 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-import reactor.core.publisher.Mono;
-import reactor.netty.http.client.HttpClient;
 
-import javax.net.ssl.SSLException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
@@ -29,27 +21,8 @@ import java.util.List;
 @RestController
 public class KubeController {
 
-    @Value(value = "${oauth.passwordGrantType}")
-    private String passwordGrantType;
-
-    @Value(value = "${oauth.clientId}")
-    private String clientId;
-
-    @Value(value = "${oauth.clientSecret}")
-    private String clientSecret;
-
-    @Value(value = "${oauth.realm}")
-    private String realm;
-
-    @Value(value = "${oauth.audience}")
-    private String audience;
-
-    @Value(value = "${oauth.issuerUrl}")
-    private String issuerUrl;
-
-    @Value(value = "${oauth.tokenEndpoint}")
-    private String tokenEndpoint;
-
+    @Autowired
+    private AuthService service;
     /**
      * This api validates user credentials with Auth0 openid connect.
      * If the authentication is successful, then it returns id_token and access_token.
@@ -64,29 +37,11 @@ public class KubeController {
      */
     @GetMapping("/kubectl")
     public String getToken(@RequestParam String username, @RequestParam String password) {
-        System.out.println("Client Id: " + clientId);
-        System.out.println("Client Secret: " + clientSecret);
-        Payload payload = new Payload(passwordGrantType, username, password, clientId,
-                clientSecret, realm, "openid", audience);
+
         String retrieve = "";
-
         try {
-            SslContext sslContext = SslContextBuilder
-                    .forClient()
-                    .trustManager(InsecureTrustManagerFactory.INSTANCE)
-                    .build();
-            HttpClient httpClient = HttpClient.create().secure(t -> t.sslContext(sslContext));
-            WebClient webClient = WebClient
-                    .builder()
-                    .clientConnector(new ReactorClientHttpConnector(httpClient))
-                    .baseUrl(issuerUrl).build();
-            retrieve = webClient.post()
-                    .uri(tokenEndpoint)
-                    .body(Mono.just(payload), Payload.class)
-                    .retrieve()
-                    .bodyToMono(String.class).block();
-
-        } catch (WebClientResponseException | SSLException e) {
+            retrieve = service.fetchToken(username, password);
+        } catch (WebClientResponseException e) {
             e.printStackTrace();
             return "{\"error\": \"Error while fetching data\", \"error_description\": \"" + e.getMessage() + "\"}";
         }
@@ -178,36 +133,5 @@ public class KubeController {
         }
 
     }
-
-    class Error {
-        private String error;
-        private String error_description;
-    }
-
-    @Data
-    class Payload {
-        private String grant_type;
-        private String username;
-        private String password;
-        private String client_id;
-        private String client_secret;
-        private String realm;
-        private String scope;
-        private String audience;
-
-        public Payload(String grantType, String username, String password,
-                       String clientId, String clientSecret, String realm,
-                       String openid, String audience) {
-            this.grant_type = grantType;
-            this.username = username;
-            this.password = password;
-            this.client_id = clientId;
-            this.client_secret = clientSecret;
-            this.realm = realm;
-            this.scope = openid;
-            this.audience = audience;
-        }
-    }
-
 
 }
