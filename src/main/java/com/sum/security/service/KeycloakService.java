@@ -43,6 +43,19 @@ public class KeycloakService implements AuthService{
     @Value(value = "${oauth.tokenEndpoint}")
     private String tokenEndpoint;
 
+    private WebClient createWebClient() throws SSLException {
+        SslContext sslContext = SslContextBuilder
+                .forClient()
+                .trustManager(InsecureTrustManagerFactory.INSTANCE)
+                .build();
+        HttpClient httpClient = HttpClient.create().secure(t -> t.sslContext(sslContext));
+        return WebClient
+                .builder()
+                .clientConnector(new ReactorClientHttpConnector(httpClient))
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .baseUrl(issuerUrl).build();
+    }
+
 
     @Override
     public String fetchToken(String username, String password) {
@@ -62,16 +75,7 @@ public class KeycloakService implements AuthService{
         String retrieve = "";
 
         try {
-            SslContext sslContext = SslContextBuilder
-                    .forClient()
-                    .trustManager(InsecureTrustManagerFactory.INSTANCE)
-                    .build();
-            HttpClient httpClient = HttpClient.create().secure(t -> t.sslContext(sslContext));
-            WebClient webClient = WebClient
-                    .builder()
-                    .clientConnector(new ReactorClientHttpConnector(httpClient))
-                    .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                    .baseUrl(issuerUrl).build();
+            WebClient webClient = createWebClient();
             retrieve = webClient.post()
                     .uri(tokenEndpoint)
                     .body(BodyInserters.fromFormData(map))
