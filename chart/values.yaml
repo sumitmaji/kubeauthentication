@@ -14,17 +14,27 @@ service:
   type: ClusterIP
   port: 8001
 
-secret:
-  enabled: true
-
-env:
-  enabled: true
-  normal: {}
-  secret:
-    CLIENT_ID: __CLIENT_ID__
-    CLIENT_SECRET: __CLIENT_SECRET__
-    OAUTH_REALM: __OAUTH_REALM__
-    ACTIVE_PROFILE: __ACTIVE_PROFILE__
+extraEnvVars:
+  - name: CLIENT_ID
+    valueFrom:
+      secretKeyRef:
+        name: oauth-secrets
+        key: CLIENT_ID
+  - name: CLIENT_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: oauth-secrets
+        key: CLIENT_SECRET
+  - name: OAUTH_REALM
+    valueFrom:
+      secretKeyRef:
+        name: oauth-secrets
+        key: OAUTH_REALM
+  - name: ACTIVE_PROFILE
+    valueFrom:
+      secretKeyRef:
+        name: oauth-secrets
+        key: ACTIVE_PROFILE
 
 privateReg:
   enabled: true
