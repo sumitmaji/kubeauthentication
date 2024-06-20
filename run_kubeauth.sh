@@ -10,8 +10,7 @@ source util
 ./build.sh
 ./tag_push.sh
 
-helm status $RELEASE_NAME -n $RELEASE_NAME && helm uninstall $RELEASE_NAME -n $RELEASE_NAME && kubectl delete ns $RELEASE_NAME
-
+helm status $RELEASE_NAME -n $RELEASE_NAME 2>/dev/null && helm uninstall $RELEASE_NAME -n $RELEASE_NAME && kubectl delete ns $RELEASE_NAME
 
 kubectl create ns $RELEASE_NAME
 helm install $RELEASE_NAME $PATH_TO_CHART \
