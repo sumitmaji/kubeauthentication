@@ -19,12 +19,12 @@ extraEnvVars:
     valueFrom:
       secretKeyRef:
         name: oauth-secrets
-        key: CLIENT_ID
+        key: OIDC_CLIENT_ID
   - name: CLIENT_SECRET
     valueFrom:
       secretKeyRef:
         name: oauth-secrets
-        key: CLIENT_SECRET
+        key: OIDC_CLIENT_SECRET
   - name: OAUTH_REALM
     valueFrom:
       secretKeyRef:
