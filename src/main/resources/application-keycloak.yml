@@ -4,7 +4,7 @@ server:
 
 keycloak:
   server:
-    uri: https://keycloak.gokcloud.com
+    uri: ${KEYCLOAK_SERVER_URI}
 oauth:
   clientId: ${CLIENT_ID}
   clientSecret: ${CLIENT_SECRET}

@@ -15,6 +15,11 @@ service:
   port: 8001
 
 extraEnvVars:
+  - name: KEYCLOAK_SERVER_URI
+    valueFrom:
+      secretKeyRef:
+        name: oauth-secrets
+        key: OAUTH_SERVER_URI
   - name: CLIENT_ID
     valueFrom:
       secretKeyRef:
