@@ -81,7 +81,7 @@ spec:
                         ls -ltr
                         
                         helm repo add gok https://chart.gokcloud.com --username sumit --password abcdef --insecure-skip-tls-verify
-                        helm cm-push kubeauthentication-1.tgz gok --insecure
+                        helm cm-push kubeauthentication-1.tgz gok --insecure --force
                     """
                 }
             }
