@@ -71,6 +71,7 @@ spec:
                 container('helm') {
                    sh """
                         helm version
+                        helm plugin install https://github.com/chartmuseum/helm-push
                         git clone https://github.com/sumitmaji/kubeauthentication.git /workspace/kubeauthentication
                         # Navigate to the Helm chart directory
                         cd /workspace/kubeauthentication/chart
@@ -78,11 +79,9 @@ spec:
                         # Package the Helm chart
                         helm package .
                         ls -ltr
-
-                        # Push the Helm chart to the OCI registry
-                        export HELM_EXPERIMENTAL_OCI=1
-                        helm push kubeauthentication-1.tgz oci://registry.gokcloud.com/kubeauthentication --insecure-skip-tls-verify
                         
+                        helm repo add gok https://chart.gokcloud.com --username sumit --password abcdef --insecure-skip-tls-verify
+                        helm cm-push kubeauthentication-1.tgz gok --insecure
                     """
                 }
             }
